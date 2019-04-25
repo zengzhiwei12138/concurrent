@@ -28,11 +28,12 @@ public class ConcurrentTest {
         // 定义计数器
         final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
         for (int i = 0; i < clientTotal; i++) {
+            final int count = i;
             executorService.execute(() -> {
                 try {
                     // 获取线程
                     semaphore.acquire();
-                    add();
+                    add(count);
                     // 释放线程
                     semaphore.release();
                 } catch (Exception e){
@@ -45,7 +46,7 @@ public class ConcurrentTest {
         log.info("count:{}",count);
     }
 
-    private static void add() {
+    private static void add(int i) {
         count++;
     }
 }
